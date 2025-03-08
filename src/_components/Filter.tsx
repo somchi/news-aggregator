@@ -82,7 +82,6 @@ export const Filter = () => {
   };
 
   const handleDateChange = (selected: DateRange) => {
-    console.log(selected);
     dispatch({
       type: SET_FILTER_DATE,
       payload: {

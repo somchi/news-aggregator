@@ -161,7 +161,6 @@ export const newsQueryBuilder = (queryObj: SearchParams): string => {
     },
     {}
   );
-  console.log(queryMap, '=====news2', queryObj);
   const query = buildQueryString(queryMap);
   return query;
 };
@@ -174,7 +173,6 @@ export const guardianQueryBuilder = (queryObj: SearchParams): string => {
     },
     {}
   );
-  console.log(queryMap, '=====gua');
   const query = buildQueryString(queryMap);
   return query;
 };

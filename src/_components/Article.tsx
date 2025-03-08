@@ -3,7 +3,6 @@ import { Article as NewsArticle } from '@/app/utils/types';
 import Image from 'next/image';
 
 export const Article = ({ article }: { article: NewsArticle }) => {
-  // console.log(article);
   return (
     <div className="flex flex-col w-full md:w-[48%] max-w-sm h-full shadow rounded">
       <div className="w-full relative h-[200px]">

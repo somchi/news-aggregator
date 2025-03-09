@@ -118,3 +118,8 @@ export type FilterDate = {
   from: Date | string;
   to?: Date | string;
 };
+
+export type DateRange = {
+  from: Date | undefined;
+  to?: Date | undefined;
+};

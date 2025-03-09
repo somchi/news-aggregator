@@ -3,6 +3,7 @@ import {
   newsQueryBuilder,
   nytQueryBuilder,
   responseSchema,
+  specificDate,
 } from './helper';
 import { SearchParams } from './types';
 
@@ -30,7 +31,7 @@ export const getNYTArticles = async (searchParams: SearchParams) => {
 export const getGuardianArticles = async (searchParams: SearchParams) => {
   const query = guardianQueryBuilder(searchParams);
   try {
-    const url = `${GUARDIAN_BASE_URL}?api-key=${GUARDIAN_API_KEY}&order-by=newest&show-fields=byline,publication&${query}`;
+    const url = `${GUARDIAN_BASE_URL}?api-key=${GUARDIAN_API_KEY}&order-by=newest&show-fields=byline,publication&page-size=10&${query}`;
     const response = await fetch(url, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
@@ -43,10 +44,13 @@ export const getGuardianArticles = async (searchParams: SearchParams) => {
 };
 
 export const getNewsAPIArticles = async (searchParams: SearchParams) => {
+  const keys = Object.keys(searchParams);
+  const dDay = specificDate(7);
+
   const query =
-    Object.keys(searchParams).length > 0
-      ? newsQueryBuilder(searchParams)
-      : 'q=news';
+    (keys.length === 1 && keys.includes('page')) || keys.length === 0
+      ? `from=${dDay}`
+      : newsQueryBuilder(searchParams);
   try {
     const url = `/api?${query}`;
     const response = await fetch(url, {

@@ -8,6 +8,7 @@ export const ArticleCategories = [
   'World news',
   'Music',
   'Politics',
+  'Food',
 ];
 
 export const ArticleSources = [
@@ -36,6 +37,7 @@ export const keyMapNYT: Record<string, string> = {
   categories: 'fq',
   source: 'fq',
   authors: 'fq',
+  page: 'page',
 };
 
 export const keyMapGuardian: Record<string, string> = {
@@ -43,8 +45,9 @@ export const keyMapGuardian: Record<string, string> = {
   dateFrom: 'from-date',
   dateTo: 'to-date',
   categories: 'section',
-  source: 'publication',
+  source: 'q',
   authors: 'byline',
+  page: 'page',
 };
 export const keyMapNews: Record<string, string> = {
   search: 'q',
@@ -53,6 +56,7 @@ export const keyMapNews: Record<string, string> = {
   categories: 'q',
   source: 'sources',
   authors: 'q',
+  page: 'page',
 };
 
-export const NYTExcepts = ['search', 'dateFrom', 'dateTo'];
+export const NYTExcepts = ['search', 'dateFrom', 'dateTo', 'page'];

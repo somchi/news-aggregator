@@ -1,8 +1,6 @@
 'use client';
 
 import { useContext, useState } from 'react';
-import { DateRange, DayPicker } from 'react-day-picker';
-import 'react-day-picker/style.css';
 import { ArticleCategories, ArticleSources } from '@/app/utils/constants';
 import { AppContext } from '@/app/context/provider';
 import {
@@ -17,6 +15,8 @@ import {
   formatArticleDate,
   paramsToObject,
 } from '@/app/utils/helper';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 export const Filter = () => {
   const { state, dispatch } = useContext(AppContext);
   const [show, setShow] = useState<boolean>(false);
@@ -81,13 +81,12 @@ export const Filter = () => {
     });
   };
 
-  const handleDateChange = (selected: DateRange) => {
-    console.log(selected);
+  const handleDateChange = (selected: [Date | null, Date | null]) => {
     dispatch({
       type: SET_FILTER_DATE,
       payload: {
-        ...(selected.from && { dateFrom: selected.from }),
-        ...(selected.from && { dateFrom: selected.to }),
+        ...(selected[0] && { dateFrom: selected[0] }),
+        ...(selected[1] && { dateTo: selected[1] }),
       },
     });
   };
@@ -99,7 +98,7 @@ export const Filter = () => {
         onClick={toggleShow}
       >
         <svg height="12px" version="1.1" viewBox="0 0 18 12" width="18px">
-          <g fill="none" fill-rule="evenodd" stroke="none" strokeWidth="1">
+          <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
             <g
               fill="currentColor"
               id="all-filters"
@@ -165,20 +164,18 @@ export const Filter = () => {
               </div>
               <div className="flex flex-col gap-2 relative">
                 <h1 className="font-semibold text-sm">By Date</h1>
-                <DayPicker
-                  mode="range"
-                  selected={{ from: state.dateFrom, to: state.dateTo }}
-                  onSelect={handleDateChange}
-                  disabled={{ after: new Date() }}
-                  className="grid w-[300px] border border-gray-300"
-                  classNames={{
-                    months: 'flex space-y-4',
-                    month: 'space-y-4',
-                    caption_label: 'text-sm font-semibold mt-3 ml-2',
-                    day: 'h-2 w-2 p-0 font-normal bg-white text-theme-dark hover:text-blue-400',
-                  }}
-                  required
-                />
+                <div className="w-[200px]">
+                  {' '}
+                  <DatePicker
+                    selected={state.dateFrom}
+                    onChange={handleDateChange}
+                    startDate={state.dateFrom}
+                    endDate={state.dateTo}
+                    maxDate={new Date()}
+                    selectsRange
+                    inline
+                  />
+                </div>
               </div>
             </div>
 

@@ -4,6 +4,7 @@ import {
   GuardianArticle,
   NewsAPIArticle,
   NYTArticle,
+  Preferences,
   Query,
   SearchParams,
 } from './types';
@@ -82,7 +83,7 @@ export const formatDate = (articleDate: string): string => {
     month: '2-digit',
     day: '2-digit',
   }).format(date);
-  return today.replace('-', '/');
+  return today.replaceAll('-', '/');
 };
 
 export const paramsToObject = (searchParams: URLSearchParams) => {
@@ -161,20 +162,24 @@ export const newsQueryBuilder = (queryObj: SearchParams): string => {
     },
     {}
   );
-  console.log(queryMap, '=====news2', queryObj);
   const query = buildQueryString(queryMap);
   return query;
 };
 export const guardianQueryBuilder = (queryObj: SearchParams): string => {
   const queryMap = Object.entries(queryObj).reduce(
     (acc: SearchParams, [key, value]) => {
-      acc[keyMapGuardian[key]] =
-        typeof value === 'object' ? value.toString() : value;
+      if (acc[keyMapGuardian[key]]) {
+        acc[keyMapGuardian[key]] = `${
+          acc[keyMapGuardian[key]]
+        },${value?.toString()}`;
+      } else {
+        acc[keyMapGuardian[key]] =
+          typeof value === 'object' ? value.toString() : value;
+      }
       return acc;
     },
     {}
   );
-  console.log(queryMap, '=====gua');
   const query = buildQueryString(queryMap);
   return query;
 };
@@ -186,4 +191,36 @@ export const formatArticleDate = (date: Date): string => {
     day: '2-digit',
   }).format(date);
   return formatter;
+};
+
+export const paginate = (totals: number[]) => {
+  const largets = Math.max(...totals);
+  const numPages = Math.floor(largets / 10);
+  return numPages > 10 ? 10 : numPages;
+};
+
+export const queryParams = (
+  searchParams: SearchParams,
+  preferences: Partial<Preferences>
+): SearchParams => {
+  const page = searchParams.page;
+  if (!page) {
+    return Object.keys(searchParams).length > 0
+      ? searchParams
+      : Object.keys(preferences).length > 0
+      ? preferences
+      : {};
+  } else {
+    return Object.keys(searchParams).filter((key) => key !== 'page').length > 0
+      ? searchParams
+      : Object.keys(preferences).length > 0
+      ? { ...preferences, ...(page && { page }) }
+      : { ...(page && { page }) };
+  }
+};
+
+export const specificDate = (day: number) => {
+  const today = new Date();
+  const nDaysAgo = new Date(today.setDate(today.getDate() - day));
+  return formatArticleDate(nDaysAgo).replaceAll('/', '-');
 };

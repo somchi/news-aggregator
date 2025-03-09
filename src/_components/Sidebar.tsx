@@ -1,6 +1,6 @@
 'use client';
 
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Authors } from './Authors';
 import { Categories } from './Categories';
 import { Sources } from './Sources';
@@ -12,11 +12,6 @@ export const Sidebar = () => {
   const [sources, setSources] = useState<string[]>([]);
   const [authors, setAuthors] = useState<string[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
-
-  const enableApply = useMemo(() => {
-    return sources.length > 0 || categories.length > 0 || authors.length > 0;
-  }, [authors.length, categories.length, sources.length]);
-
   useEffect(() => {
     let mounted = true;
     if (mounted) {
@@ -47,6 +42,7 @@ export const Sidebar = () => {
     setAuthors([]);
     setCategories([]);
     setSources([]);
+    localStorage.removeItem('preferences');
   };
   const handleApply = () => {
     const preferences = {
@@ -127,7 +123,6 @@ export const Sidebar = () => {
             <button
               onClick={handleApply}
               className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-blue-300"
-              disabled={!enableApply}
             >
               Apply
             </button>

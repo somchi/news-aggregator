@@ -9,7 +9,6 @@ export async function GET(req: NextRequest) {
   const query = paramsToObject(searchParams);
   const qString = buildQueryString(query);
   const url = `${NEWSAPI_BASE_URL}?pageSize=10&apiKey=${NEWSAPI_API_KEY}&sortBy=publishedAt&${qString}`;
-  console.log(url);
   const response = await fetch(url, {
     method: 'GET',
     headers: {

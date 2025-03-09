@@ -13,7 +13,7 @@ export const Authors = ({ authors, handleAuthorChange }: Props) => {
             type="checkbox"
             className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
             onChange={() => handleAuthorChange(author)}
-            checked={authors.includes(author)}
+            checked={authors ? authors.includes(author) : false}
           />
           <p className="text-sm">{author}</p>
         </div>

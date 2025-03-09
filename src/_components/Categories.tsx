@@ -1,4 +1,5 @@
 import { ArticleCategories } from '@/app/utils/constants';
+import { toUpper } from '@/app/utils/helper';
 
 type Props = {
   categories: string[];
@@ -13,9 +14,9 @@ export const Categories = ({ categories, handleCategoryChange }: Props) => {
             type="checkbox"
             className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
             onChange={() => handleCategoryChange(category)}
-            checked={categories.includes(category)}
+            checked={categories ? categories.includes(category) : false}
           />
-          <p className="text-sm">{category}</p>
+          <p className="text-sm">{toUpper(category)}</p>
         </div>
       ))}
     </div>

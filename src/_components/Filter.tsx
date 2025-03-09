@@ -14,6 +14,7 @@ import {
   buildQueryString,
   formatArticleDate,
   paramsToObject,
+  toUpper,
 } from '@/app/utils/helper';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -139,7 +140,7 @@ export const Filter = () => {
                           defaultValue={source}
                           checked={state.sources.includes(source)}
                         />
-                        <p className="text-sm">{source}</p>
+                        <p className="text-sm">{toUpper(source)}</p>
                       </div>
                     ))}
                   </div>
@@ -156,7 +157,7 @@ export const Filter = () => {
                           onChange={() => handleCatChange(category)}
                           checked={state.categories.includes(category)}
                         />
-                        <p className="text-sm">{category}</p>
+                        <p className="text-sm">{toUpper(category)}</p>
                       </div>
                     ))}
                   </div>

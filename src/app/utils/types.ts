@@ -15,6 +15,7 @@ export type Article = {
   description: string;
   img: string;
   category: string;
+  url: string;
 };
 
 export type NewsAPIArticle = {

@@ -30,7 +30,7 @@ docker run -p 3000:3000 news-aggregator
 
 ## Environment setup
 
-create an .env file and copy this following environment into it
+create an .env file in at the project root level and copy this following environment into it
 
 ```bash
 NEXT_PUBLIC_NYT_KEY=Svq3I3x585AXqJnY1DtgWWfGdkBOMEA7

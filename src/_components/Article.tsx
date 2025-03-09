@@ -1,10 +1,14 @@
 import { formatDate } from '@/app/utils/helper';
 import { Article as NewsArticle } from '@/app/utils/types';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export const Article = ({ article }: { article: NewsArticle }) => {
   return (
-    <div className="flex flex-col w-full md:w-[45%] max-w-sm shadow rounded">
+    <Link
+      href={article.url ?? '#'}
+      className="flex flex-col w-full md:w-[45%] max-w-sm shadow rounded"
+    >
       <div className="w-full relative h-[200px]">
         <Image src={'/default.jpg'} alt="img" fill />
       </div>
@@ -40,6 +44,6 @@ export const Article = ({ article }: { article: NewsArticle }) => {
           </p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };

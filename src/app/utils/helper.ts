@@ -77,7 +77,7 @@ export const aggregateData = (
     })),
     ...guardian.map((itm: GuardianArticle) => ({
       title: itm.webTitle,
-      source: 'The guardian',
+      source: itm.fields.publication ?? '',
       author: itm.fields.byline,
       date: itm.webPublicationDate,
       description: itm.webTitle,
@@ -149,7 +149,7 @@ export const nytQueryBuilder = (queryObj: SearchParams): string => {
     (acc: SearchParams, [key, value]) => {
       if (acc[keyMapNYT[key]]) {
         const newValue = formatValue(key, value);
-        acc[keyMapNYT[key]] = `${acc[keyMapNYT[key]]}AND${newValue}`;
+        acc[keyMapNYT[key]] = `${acc[keyMapNYT[key]]} AND ${newValue}`;
       } else {
         acc[keyMapNYT[key]] = NYTExcepts.includes(key)
           ? value
@@ -167,7 +167,9 @@ export const newsQueryBuilder = (queryObj: SearchParams): string => {
   const queryMap = Object.entries(queryObj).reduce(
     (acc: SearchParams, [key, value]) => {
       if (acc[keyMapNews[key]]) {
-        acc[keyMapNews[key]] = `${acc[keyMapNews[key]]},${value?.toString()}`;
+        acc[keyMapNews[key]] = `${
+          acc[keyMapNews[key]]
+        } AND ${value?.toString()}`;
       } else {
         acc[keyMapNews[key]] =
           typeof value === 'object' ? value.toString() : value;
@@ -185,10 +187,12 @@ export const guardianQueryBuilder = (queryObj: SearchParams): string => {
       if (acc[keyMapGuardian[key]]) {
         acc[keyMapGuardian[key]] = `${
           acc[keyMapGuardian[key]]
-        },${value?.toString()}`;
+        }${value?.toString()}`;
       } else {
         acc[keyMapGuardian[key]] =
-          typeof value === 'object' ? value.toString() : value;
+          typeof value === 'object'
+            ? value.toString().replaceAll(',', '|')
+            : value;
       }
       return acc;
     },
@@ -199,11 +203,7 @@ export const guardianQueryBuilder = (queryObj: SearchParams): string => {
 };
 
 export const formatArticleDate = (date: Date): string => {
-  const formatter = new Intl.DateTimeFormat('en-GB', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  }).format(date);
+  const formatter = new Intl.DateTimeFormat('en-CA').format(date);
   return formatter;
 };
 
@@ -236,5 +236,11 @@ export const queryParams = (
 export const specificDate = (day: number) => {
   const today = new Date();
   const nDaysAgo = new Date(today.setDate(today.getDate() - day));
-  return formatArticleDate(nDaysAgo).replaceAll('/', '-');
+  return formatArticleDate(nDaysAgo);
+};
+
+export const toUpper = (value: string) => {
+  const capitalized = value?.charAt(0).toUpperCase() + value?.slice(1);
+
+  return capitalized;
 };

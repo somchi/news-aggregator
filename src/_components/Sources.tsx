@@ -13,7 +13,7 @@ export const Sources = ({ sources, handleSourceChange }: Props) => {
             type="checkbox"
             className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
             onChange={() => handleSourceChange(source)}
-            checked={sources.includes(source)}
+            checked={sources ? sources.includes(source) : false}
           />
           <p className="text-sm">{source}</p>
         </div>

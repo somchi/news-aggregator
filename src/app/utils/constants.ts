@@ -1,21 +1,20 @@
 export const ArticleCategories = [
-  'Business',
-  'Entertainment',
-  'General health',
-  'Science',
-  'Sports',
-  'Technology',
-  'World news',
-  'Music',
-  'Politics',
-  'Food',
+  'business',
+  'football',
+  'science',
+  'sports',
+  'technology',
+  'world news',
+  'music',
+  'politics',
+  'food',
 ];
 
 export const ArticleSources = [
   'The New York Times',
-  'The Guardian',
+  'CBS News',
   'ABC News',
-  'Al Jazeera English',
+  'The Verge',
   'BBC News',
   'Bloomberg',
   'theguardian.com',
@@ -28,6 +27,7 @@ export const ArticleAuthor = [
   'Todd Haselton',
   'Julian Chokkattu',
   'Wes Davis',
+  'John Brewin',
 ];
 
 export const keyMapNYT: Record<string, string> = {
@@ -45,7 +45,7 @@ export const keyMapGuardian: Record<string, string> = {
   dateFrom: 'from-date',
   dateTo: 'to-date',
   categories: 'section',
-  source: 'q',
+  source: 'publication',
   authors: 'byline',
   page: 'page',
 };

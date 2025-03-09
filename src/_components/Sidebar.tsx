@@ -19,9 +19,9 @@ export const Sidebar = () => {
       if (!preferences) return;
       const preferenceData = JSON.parse(preferences);
 
-      setAuthors(preferenceData.authors);
-      setCategories(preferenceData.categories);
-      setSources(preferenceData.source);
+      setAuthors(preferenceData.authors ?? []);
+      setCategories(preferenceData.categories ?? []);
+      setSources(preferenceData.source ?? []);
       dispatch({
         type: SET_USER_PREFERENCES,
         payload: { preferences: preferenceData },
@@ -31,7 +31,6 @@ export const Sidebar = () => {
       mounted = false;
     };
   }, [dispatch]);
-
   const handleClear = () => {
     dispatch({
       type: SET_USER_PREFERENCES,
@@ -72,6 +71,7 @@ export const Sidebar = () => {
       : [...categories, value];
     setCategories(data);
   };
+
   const handleAuthorChange = (value: string) => {
     const data = authors.includes(value)
       ? authors.filter((item) => item !== value)

@@ -71,7 +71,6 @@ export const SearchInput = ({
           name="search"
           placeholder="Search by keywords..."
           className="w-full px-5 py-2 rounded-xl"
-          defaultValue={searchParams.search ?? ''}
           value={state.search}
           onChange={handleChange}
         />

@@ -38,6 +38,17 @@ export const createQueryString = <T extends { toString(): string }>(
   return params.toString();
 };
 
+export const shuffleData = (data: Article[]): Article[] => {
+  const shuffled = [...data];
+  if (data.length === 0) return [];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j: number = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  return shuffled;
+};
+
 export const aggregateData = (
   nyt: NYTArticle[],
   newsAPI: NewsAPIArticle[],
@@ -52,6 +63,7 @@ export const aggregateData = (
       description: itm.abstract,
       img: '',
       category: itm.section_name,
+      url: itm.web_url,
     })),
     ...newsAPI.map((itm: NewsAPIArticle) => ({
       title: itm.title,
@@ -61,6 +73,7 @@ export const aggregateData = (
       description: itm.description,
       img: itm.urlToImage,
       category: '',
+      url: itm.url,
     })),
     ...guardian.map((itm: GuardianArticle) => ({
       title: itm.webTitle,
@@ -70,9 +83,10 @@ export const aggregateData = (
       description: itm.webTitle,
       img: '',
       category: itm.sectionName,
+      url: itm.webUrl,
     })),
   ];
-  return formattedNews;
+  return shuffleData(formattedNews);
 };
 
 export const formatDate = (articleDate: string): string => {
